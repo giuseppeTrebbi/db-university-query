@@ -50,7 +50,30 @@ FROM teachers
 WHERE phone IS NULL;
 
 
+-- Contare quanti iscritti ci sono stati ogni anno
+SELECT count(id) AS numero_iscritti, year(enrolment_date) AS anno_scolastico
+FROM students
+GROUP BY year(enrolment_date);
 
+
+-- Contare gli insegnanti che hanno l'ufficio nello stesso edificio
+SELECT count(id) AS numero_insegnanti, office_address
+FROM teachers
+GROUP BY office_address;
+
+
+-- Calcolare la media dei voti di ogni appello d'esame
+SELECT exam_id, AVG(vote) AS media_voti, count(student_id) AS esami_sostenuti
+FROM exam_student
+GROUP BY exam_id;
+
+
+-- Contare quanti corsi di laurea ci sono per ogni dipartimento
+SELECT departments.id, departments.name, count(degrees.id) AS nr_corsi_di_laurea
+FROM degrees
+INNER JOIN departments
+ON degrees.department_id = departments.id
+GROUP BY departments.id;
 
 
 
